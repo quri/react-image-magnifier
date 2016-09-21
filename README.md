@@ -30,9 +30,9 @@ const App = () => (
 
 | Prop | Required | Default  | Type | Description |
 | :------------- |:---:|:----------------:| :--------------------| :-----|
-| `src`          | YES |                  | `String`             | the src |
-| `height`       |  NO | `"auto"`         | `Number` or `String` | the height non-zoomed-in image |
-| `width`        |  NO | `"100%"`         | `Number` or `String` | the width of the non-zoomed-in image |
+| `src`          | YES |                  | `String`             | URL of image |
+| `height`       |  NO | `"auto"`         | `Number` or `String` | height non-zoomed-in image |
+| `width`        |  NO | `"100%"`         | `Number` or `String` | width of the non-zoomed-in image |
 | `zoomImage`    |  NO | src size         | `{ width, height }`  | size of the zoomed-in image |
-| `cursorOffset` |  NO | `{ x: 0, y: 0 }` | `{ x, y }`           | the offset of the zoom bubble from the cursor |
-| `size`         |  NO | `200`            | `Number`             | the size of the magnifier window |
+| `cursorOffset` |  NO | `{ x: 0, y: 0 }` | `{ x, y }`           | offset of the zoom bubble from the cursor |
+| `size`         |  NO | `200`            | `Number`             | size of the magnifier window |
