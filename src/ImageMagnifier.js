@@ -35,7 +35,7 @@ var Magnifier = React.createClass({
   render() {
     var props = this.props;
     var halfSize = props.size / 2;
-    var imageSize = this.props.zoomImage ? this.props.zoomImage : getImageSize(this.props.src);
+    var imageSize = props.zoomImage ? props.zoomImage : getImageSize(props.src);
     var magX = imageSize.width / props.smallImage.width;
     var magY = imageSize.height / props.smallImage.height;
     var bgX = -(props.offsetX * magX - halfSize);
@@ -90,8 +90,8 @@ var ImageMagnifier = React.createClass({
       y: PropTypes.number.isRequired,
     }), // the offset of the zoom bubble from the cursor
     src: PropTypes.string.isRequired, // the URL of the image
-    height: PropTypes.number, // the size of the non-zoomed-in image
-    width: PropTypes.number, // the size of the non-zoomed-in image
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // the size of the non-zoomed-in image
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // the size of the non-zoomed-in image
     zoomImage: PropTypes.shape({
       height: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,
@@ -148,14 +148,17 @@ var ImageMagnifier = React.createClass({
     ReactDOM.render(
       <Magnifier
         cursorOffset={this.props.cursorOffset}
+        offsetX={this.state.offsetX}
+        offsetY={this.state.offsetY}
         size={this.props.size}
         smallImage={{
           height: this.img.clientHeight,
           width: this.img.clientWidth,
         }}
         src={this.props.src}
+        x={this.state.x}
+        y={this.state.y}
         zoomImage={this.props.zoomImage}
-        {...this.state}
       />,
     this.portalElement);
   },
@@ -163,7 +166,7 @@ var ImageMagnifier = React.createClass({
   render() {
     return (
       <img
-        ref={node => this.img = node}
+        ref={(node) => this.img = node}
         src={this.props.src}
         style={{
           height: this.props.height,
