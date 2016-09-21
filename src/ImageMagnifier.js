@@ -1,5 +1,5 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React, { PropTypes } from "react";
+import ReactDOM from "react-dom";
 
 function getImageSize(src) {
   var image = new Image();
@@ -13,39 +13,39 @@ function getImageSize(src) {
 var Magnifier = React.createClass({
   propTypes: {
     // the size of the magnifier window
-    size: React.PropTypes.number.isRequired,
+    size: PropTypes.number.isRequired,
 
     // x position on screen
-    x: React.PropTypes.number.isRequired,
+    x: PropTypes.number.isRequired,
 
     // y position on screen
-    y: React.PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
 
     // x position relative to the image
-    offsetX: React.PropTypes.number.isRequired,
+    offsetX: PropTypes.number.isRequired,
 
     // y position relative to the image
-    offsetY: React.PropTypes.number.isRequired,
+    offsetY: PropTypes.number.isRequired,
 
     // the offset of the zoom bubble from the cursor
-    cursorOffset: React.PropTypes.shape({
-      x: React.PropTypes.number.isRequired,
-      y: React.PropTypes.number.isRequired,
+    cursorOffset: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
     }).isRequired,
 
     // the URL of the image
-    src: React.PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
 
     // the size of the non-zoomed-in image
-    smallImage: React.PropTypes.shape({
-      height: React.PropTypes.number.isRequired,
-      width: React.PropTypes.number.isRequired,
+    smallImage: PropTypes.shape({
+      height: PropTypes.number.isRequired,
+      width: PropTypes.number.isRequired,
     }).isRequired,
 
     // the size of the zoomed-in image
-    zoomImage: React.PropTypes.shape({
-      height: React.PropTypes.number.isRequired,
-      width: React.PropTypes.number.isRequired,
+    zoomImage: PropTypes.shape({
+      height: PropTypes.number.isRequired,
+      width: PropTypes.number.isRequired,
     }),
   },
 
@@ -102,27 +102,25 @@ function getOffset(el) {
 var ImageMagnifier = React.createClass({
   propTypes: {
     // the size of the magnifier window
-    size: React.PropTypes.number,
+    size: PropTypes.number,
 
     // the offset of the zoom bubble from the cursor
-    cursorOffset: React.PropTypes.shape({
-      x: React.PropTypes.number.isRequired,
-      y: React.PropTypes.number.isRequired,
+    cursorOffset: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
     }),
 
     // the URL of the image
-    src: React.PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
 
     // the size of the non-zoomed-in image
-    image: React.PropTypes.shape({
-      height: React.PropTypes.number.isRequired,
-      width: React.PropTypes.number.isRequired,
-    }).isRequired,
+    height: PropTypes.number,
+    width: PropTypes.number,
 
     // the size of the zoomed-in image
-    zoomImage: React.PropTypes.shape({
-      height: React.PropTypes.number.isRequired,
-      width: React.PropTypes.number.isRequired,
+    zoomImage: PropTypes.shape({
+      height: PropTypes.number.isRequired,
+      width: PropTypes.number.isRequired,
     }),
   },
 
@@ -175,7 +173,10 @@ var ImageMagnifier = React.createClass({
       <Magnifier
         cursorOffset={this.props.cursorOffset}
         size={this.props.size}
-        smallImage={this.props.image}
+        smallImage={{
+          height: this.props.height || this.img.clientHeight,
+          width: this.props.width || this.img.clientWidth,
+        }}
         src={this.props.src}
         zoomImage={this.props.zoomImage}
         {...this.state}
@@ -186,10 +187,12 @@ var ImageMagnifier = React.createClass({
   render() {
     return (
       <img
-        height={this.props.image.height}
         ref={node => this.img = node}
         src={this.props.src}
-        width={this.props.image.width}
+        style={{
+          height: this.props.height || "auto",
+          width: this.props.width || "100%",
+        }}
       />
     );
   }
