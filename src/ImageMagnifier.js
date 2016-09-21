@@ -1,6 +1,15 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+function getImageSize(src) {
+  var image = new Image();
+  image.src = src;
+  return {
+    height: image.height,
+    width: image.width,
+  };
+}
+
 var Magnifier = React.createClass({
   propTypes: {
     // the size of the magnifier window
@@ -21,7 +30,7 @@ var Magnifier = React.createClass({
     // the offset of the zoom bubble from the cursor
     cursorOffset: React.PropTypes.shape({
       x: React.PropTypes.number.isRequired,
-      y: React.PropTypes.number.isRequired
+      y: React.PropTypes.number.isRequired,
     }).isRequired,
 
     // the URL of the image
@@ -29,22 +38,23 @@ var Magnifier = React.createClass({
 
     // the size of the non-zoomed-in image
     smallImage: React.PropTypes.shape({
+      height: React.PropTypes.number.isRequired,
       width: React.PropTypes.number.isRequired,
-      height: React.PropTypes.number.isRequired
     }).isRequired,
 
     // the size of the zoomed-in image
     zoomImage: React.PropTypes.shape({
+      height: React.PropTypes.number.isRequired,
       width: React.PropTypes.number.isRequired,
-      height: React.PropTypes.number.isRequired
-    }).isRequired
+    }),
   },
 
   render() {
     var props = this.props;
     var halfSize = props.size / 2;
-    var magX = props.zoomImage.width / props.smallImage.width;
-    var magY = props.zoomImage.height / props.smallImage.height;
+    var imageSize = this.props.zoomImage ? this.props.zoomImage : getImageSize(this.props.src);
+    var magX = imageSize.width / props.smallImage.width;
+    var magY = imageSize.height / props.smallImage.height;
     var bgX = -(props.offsetX * magX - halfSize);
     var bgY = -(props.offsetY * magY - halfSize);
     var isVisible = props.offsetY < props.smallImage.height &&
@@ -97,7 +107,7 @@ var ImageMagnifier = React.createClass({
     // the offset of the zoom bubble from the cursor
     cursorOffset: React.PropTypes.shape({
       x: React.PropTypes.number.isRequired,
-      y: React.PropTypes.number.isRequired
+      y: React.PropTypes.number.isRequired,
     }),
 
     // the URL of the image
@@ -105,15 +115,15 @@ var ImageMagnifier = React.createClass({
 
     // the size of the non-zoomed-in image
     image: React.PropTypes.shape({
+      height: React.PropTypes.number.isRequired,
       width: React.PropTypes.number.isRequired,
-      height: React.PropTypes.number.isRequired
     }).isRequired,
 
     // the size of the zoomed-in image
     zoomImage: React.PropTypes.shape({
+      height: React.PropTypes.number.isRequired,
       width: React.PropTypes.number.isRequired,
-      height: React.PropTypes.number.isRequired
-    }).isRequired
+    }),
   },
 
   portalElement: null,
