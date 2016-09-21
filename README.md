@@ -9,40 +9,30 @@ A react component that accepts a high-res source image and produces a magnifier 
 
 ## Usage
 
-```bash
-> npm install --save react-image-magnifier
-```
-
 ```jsx
-var ImageMagnifer = require('react-image-magnifier');
+import ImageMagnifer from 'react-image-magnifier';
 
-var App = React.createClass({
-
-    render () {
-        return (
-            <ImageMagnifier
-                image={{
-                    src: "img/beach-small.jpg",
-                    width: 400,
-                    height: 300
-                }}
-                zoomImage={{
-                    src: "img/beach-large.jpg",
-                    width: 1600,
-                    height: 1200
-                }}
-                cursorOffset={{ x: 80, y: -80 }}
-            />
-        );
-    }
-});
+const App = () => (
+  <ImageMagnifier
+    src: "img/beach-small.jpg",
+    height: 300
+    width: 400,
+    zoomImage={{
+      width: 1600,
+      height: 1200
+    }}
+    cursorOffset={{ x: 80, y: -80 }}
+  />
+)
 ```
 
 ## API (props)
 
 | Prop | Required | Default  | Type | Description |
-| :------------ |:---:|:---------------:| :---------------| :-----|
-| `image` | YES | | `{ src, width, height }` | the src, size of the non-zoomed-in image |
-| `zoomImage` | YES | | `{ src, width, height }` | the src, size of the zoomed-in image |
-| `cursorOffset` | NO | `{ x: 0, y: 0 }` | `{ x, y }` | the offset of the zoom bubble from the cursor |
-| `size` | NO | `200` | `Number` | the size of the magnifier window |
+| :------------- |:---:|:----------------:| :--------------------| :-----|
+| `src`          | YES |                  | `String`             | the src |
+| `height`       |  NO | `"auto"`         | `Number` or `String` | the height non-zoomed-in image |
+| `width`        |  NO | `"100%"`         | `Number` or `String` | the width of the non-zoomed-in image |
+| `zoomImage`    |  NO | src size         | `{ width, height }`  | size of the zoomed-in image |
+| `cursorOffset` |  NO | `{ x: 0, y: 0 }` | `{ x, y }`           | the offset of the zoom bubble from the cursor |
+| `size`         |  NO | `200`            | `Number`             | the size of the magnifier window |
