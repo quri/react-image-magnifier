@@ -19,7 +19,8 @@
   "author": "Leland Richardson",
   "license": "MIT",
   "dependencies": {
-    "react": "^0.13.3"
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
   },
   "devDependencies": {
     "es5-shim": "^4.1.3",
