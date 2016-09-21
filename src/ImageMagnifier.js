@@ -24,16 +24,17 @@ var Magnifier = React.createClass({
       y: React.PropTypes.number.isRequired
     }).isRequired,
 
+    // the URL of the image
+    src: React.PropTypes.string.isRequired,
+
     // the size of the non-zoomed-in image
     smallImage: React.PropTypes.shape({
-      src: React.PropTypes.string.isRequired,
       width: React.PropTypes.number.isRequired,
       height: React.PropTypes.number.isRequired
     }).isRequired,
 
     // the size of the zoomed-in image
     zoomImage: React.PropTypes.shape({
-      src: React.PropTypes.string.isRequired,
       width: React.PropTypes.number.isRequired,
       height: React.PropTypes.number.isRequired
     }).isRequired
@@ -44,8 +45,8 @@ var Magnifier = React.createClass({
     var halfSize = props.size / 2;
     var magX = props.zoomImage.width / props.smallImage.width;
     var magY = props.zoomImage.height / props.smallImage.height;
-    var bgX = -(props.offsetX*magX - halfSize);
-    var bgY = -(props.offsetY*magY - halfSize);
+    var bgX = -(props.offsetX * magX - halfSize);
+    var bgY = -(props.offsetY * magY - halfSize);
     var isVisible = props.offsetY < props.smallImage.height &&
                     props.offsetX < props.smallImage.width &&
                     props.offsetY > 0 &&
@@ -62,12 +63,12 @@ var Magnifier = React.createClass({
         marginTop: -halfSize + props.cursorOffset.y,
         backgroundColor: 'white',
         borderRadius: props.size,
-        boxShadow: `1px 1px 6px rgba(0,0,0,0.3)`
+        boxShadow: '1px 1px 6px rgba(0,0,0,0.3)'
       }}>
           <div style={{
             width: props.size,
             height: props.size,
-            backgroundImage: `url(${props.zoomImage.src})`,
+            backgroundImage: `url(${props.src})`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: `${bgX}px ${bgY}px`,
             borderRadius: props.size
@@ -90,7 +91,6 @@ function getOffset(el) {
 
 var ImageMagnifier = React.createClass({
   propTypes: {
-
     // the size of the magnifier window
     size: React.PropTypes.number,
 
@@ -100,16 +100,17 @@ var ImageMagnifier = React.createClass({
       y: React.PropTypes.number.isRequired
     }),
 
+    // the URL of the image
+    src: React.PropTypes.string.isRequired,
+
     // the size of the non-zoomed-in image
     image: React.PropTypes.shape({
-      src: React.PropTypes.string.isRequired,
       width: React.PropTypes.number.isRequired,
       height: React.PropTypes.number.isRequired
     }).isRequired,
 
     // the size of the zoomed-in image
     zoomImage: React.PropTypes.shape({
-      src: React.PropTypes.string.isRequired,
       width: React.PropTypes.number.isRequired,
       height: React.PropTypes.number.isRequired
     }).isRequired
@@ -165,6 +166,7 @@ var ImageMagnifier = React.createClass({
         cursorOffset={this.props.cursorOffset}
         size={this.props.size}
         smallImage={this.props.image}
+        src={this.props.src}
         zoomImage={this.props.zoomImage}
         {...this.state}
       />,
@@ -176,7 +178,7 @@ var ImageMagnifier = React.createClass({
       <img
         height={this.props.image.height}
         ref={node => this.img = node}
-        src={this.props.image.src}
+        src={this.props.src}
         width={this.props.image.width}
       />
     );
