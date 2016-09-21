@@ -1,5 +1,5 @@
-import React, { PropTypes } from "react";
-import ReactDOM from "react-dom";
+import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 
 function getImageSize(src) {
   var image = new Image();
@@ -12,41 +12,24 @@ function getImageSize(src) {
 
 var Magnifier = React.createClass({
   propTypes: {
-    // the size of the magnifier window
-    size: PropTypes.number.isRequired,
-
-    // x position on screen
-    x: PropTypes.number.isRequired,
-
-    // y position on screen
-    y: PropTypes.number.isRequired,
-
-    // x position relative to the image
-    offsetX: PropTypes.number.isRequired,
-
-    // y position relative to the image
-    offsetY: PropTypes.number.isRequired,
-
-    // the offset of the zoom bubble from the cursor
+    size: PropTypes.number.isRequired, // the size of the magnifier window
+    x: PropTypes.number.isRequired, // x position on screen
+    y: PropTypes.number.isRequired, // y position on screen
+    offsetX: PropTypes.number.isRequired, // x position relative to the image
+    offsetY: PropTypes.number.isRequired, // y position relative to the image
     cursorOffset: PropTypes.shape({
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired,
-    }).isRequired,
-
-    // the URL of the image
-    src: PropTypes.string.isRequired,
-
-    // the size of the non-zoomed-in image
+    }).isRequired, // the offset of the zoom bubble from the cursor
+    src: PropTypes.string.isRequired, // the URL of the image
     smallImage: PropTypes.shape({
       height: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,
-    }).isRequired,
-
-    // the size of the zoomed-in image
+    }).isRequired, // the size of the non-zoomed-in image
     zoomImage: PropTypes.shape({
       height: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,
-    }),
+    }), // the size of the zoomed-in image
   },
 
   render() {
@@ -101,27 +84,18 @@ function getOffset(el) {
 
 var ImageMagnifier = React.createClass({
   propTypes: {
-    // the size of the magnifier window
-    size: PropTypes.number,
-
-    // the offset of the zoom bubble from the cursor
+    size: PropTypes.number, // the size of the magnifier window
     cursorOffset: PropTypes.shape({
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired,
-    }),
-
-    // the URL of the image
-    src: PropTypes.string.isRequired,
-
-    // the size of the non-zoomed-in image
-    height: PropTypes.number,
-    width: PropTypes.number,
-
-    // the size of the zoomed-in image
+    }), // the offset of the zoom bubble from the cursor
+    src: PropTypes.string.isRequired, // the URL of the image
+    height: PropTypes.number, // the size of the non-zoomed-in image
+    width: PropTypes.number, // the size of the non-zoomed-in image
     zoomImage: PropTypes.shape({
       height: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,
-    }),
+    }), // the size of the zoomed-in image
   },
 
   portalElement: null,
@@ -129,7 +103,9 @@ var ImageMagnifier = React.createClass({
   getDefaultProps() {
     return {
       size: 200,
-      cursorOffset: { x: 0, y: 0 }
+      cursorOffset: { x: 0, y: 0 },
+      height: "auto",
+      width: "100%",
     };
   },
 
@@ -174,8 +150,8 @@ var ImageMagnifier = React.createClass({
         cursorOffset={this.props.cursorOffset}
         size={this.props.size}
         smallImage={{
-          height: this.props.height || this.img.clientHeight,
-          width: this.props.width || this.img.clientWidth,
+          height: this.img.clientHeight,
+          width: this.img.clientWidth,
         }}
         src={this.props.src}
         zoomImage={this.props.zoomImage}
@@ -190,8 +166,8 @@ var ImageMagnifier = React.createClass({
         ref={node => this.img = node}
         src={this.props.src}
         style={{
-          height: this.props.height || "auto",
-          width: this.props.width || "100%",
+          height: this.props.height,
+          width: this.props.width,
         }}
       />
     );
