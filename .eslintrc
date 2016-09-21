@@ -1,0 +1,15 @@
+{
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "plugins": ["react"],
+  "rules": {
+    "indent": ["error", 2],
+    "react/jsx-closing-bracket-location": 2,
+    "react/jsx-indent-props": [2, 2],
+    "react/jsx-sort-props": 2
+  }
+}
