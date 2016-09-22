@@ -33,6 +33,8 @@ const App = () => (
 | `src`          | YES |                  | `String`             | URL of image |
 | `height`       |  NO | `"auto"`         | `Number` or `String` | height non-zoomed-in image |
 | `width`        |  NO | `"100%"`         | `Number` or `String` | width of the non-zoomed-in image |
+| `link`         |  NO | `false`          | `Boolean`            | linked image |
 | `zoomImage`    |  NO | src size         | `{ width, height }`  | size of the zoomed-in image |
 | `cursorOffset` |  NO | `{ x: 0, y: 0 }` | `{ x, y }`           | offset of the zoom bubble from the cursor |
 | `size`         |  NO | `200`            | `Number`             | size of the magnifier window |
+| `style`        |  NO |                  | `Object`             | optional styling |

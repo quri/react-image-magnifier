@@ -15,18 +15,20 @@ function getOffset(el) {
 
 const ImageMagnifier = React.createClass({
   propTypes: {
-    size: PropTypes.number, // the size of the magnifier window
+    size: PropTypes.number, // size of the magnifier window
     cursorOffset: PropTypes.shape({
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired,
-    }), // the offset of the zoom bubble from the cursor
-    src: PropTypes.string.isRequired, // the URL of the image
-    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // the size of the non-zoomed-in image
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // the size of the non-zoomed-in image
+    }), // offset of the zoom bubble from the cursor
+    link: PropTypes.bool, // image as a link
+    src: PropTypes.string.isRequired, // URL of the image
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
     zoomImage: PropTypes.shape({
       height: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,
-    }), // the size of the zoomed-in image
+    }), // size of the zoomed-in image
+    style: PropTypes.object,
   },
 
   portalElement: null,
@@ -93,17 +95,30 @@ const ImageMagnifier = React.createClass({
     this.portalElement);
   },
 
-  render() {
+  renderImage() {
     return (
       <img
         ref={(node) => this.img = node}
         src={this.props.src}
-        style={{
-          height: this.props.height,
-          width: this.props.width,
-        }}
+        style={
+          Object.assign({
+            height: this.props.height,
+            width: this.props.width,
+          }, this.props.style)
+        }
       />
     );
+  },
+
+  render() {
+    if (this.props.link) {
+      return (
+        <a href={this.props.src} target="_blank">
+          {this.renderImage()}
+        </a>
+      )
+    }
+    return this.renderImage();
   }
 });
 
