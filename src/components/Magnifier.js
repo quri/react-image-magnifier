@@ -11,7 +11,7 @@ function getImageSize(src) {
 
 const Magnifier = React.createClass({
   propTypes: {
-    size: PropTypes.number.isRequired, // the size of the magnifier window
+    size: PropTypes.number.isRequired, // size of the magnifier window
     x: PropTypes.number.isRequired, // x position on screen
     y: PropTypes.number.isRequired, // y position on screen
     offsetX: PropTypes.number.isRequired, // x position relative to the image
@@ -19,16 +19,16 @@ const Magnifier = React.createClass({
     cursorOffset: PropTypes.shape({
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired,
-    }).isRequired, // the offset of the zoom bubble from the cursor
-    src: PropTypes.string.isRequired, // the URL of the image
+    }).isRequired, // offset of the zoom bubble from the cursor
+    src: PropTypes.string.isRequired, // URL of the image
     smallImage: PropTypes.shape({
       height: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,
-    }).isRequired, // the size of the non-zoomed-in image
+    }).isRequired, // size of the non-zoomed-in image
     zoomImage: PropTypes.shape({
       height: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,
-    }), // the size of the zoomed-in image
+    }), // size of the zoomed-in image
   },
 
   render() {
