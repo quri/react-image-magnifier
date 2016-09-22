@@ -20,7 +20,6 @@ const ImageMagnifier = React.createClass({
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired,
     }), // offset of the zoom bubble from the cursor
-    link: PropTypes.bool, // image as a link
     src: PropTypes.string.isRequired, // URL of the image
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
@@ -95,7 +94,7 @@ const ImageMagnifier = React.createClass({
     this.portalElement);
   },
 
-  renderImage() {
+  render() {
     return (
       <img
         ref={(node) => this.img = node}
@@ -108,17 +107,6 @@ const ImageMagnifier = React.createClass({
         }
       />
     );
-  },
-
-  render() {
-    if (this.props.link) {
-      return (
-        <a href={this.props.src} target="_blank">
-          {this.renderImage()}
-        </a>
-      )
-    }
-    return this.renderImage();
   }
 });
 
