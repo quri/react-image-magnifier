@@ -28,6 +28,7 @@ const ImageMagnifier = React.createClass({
       height: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,
     }), // size of the zoomed-in image
+    style: PropTypes.object,
   },
 
   portalElement: null,
@@ -99,10 +100,12 @@ const ImageMagnifier = React.createClass({
       <img
         ref={(node) => this.img = node}
         src={this.props.src}
-        style={{
-          height: this.props.height,
-          width: this.props.width,
-        }}
+        style={
+          Object.assign({
+            height: this.props.height,
+            width: this.props.width,
+          }, this.props.style)
+        }
       />
     );
   },

@@ -37,3 +37,4 @@ const App = () => (
 | `zoomImage`    |  NO | src size         | `{ width, height }`  | size of the zoomed-in image |
 | `cursorOffset` |  NO | `{ x: 0, y: 0 }` | `{ x, y }`           | offset of the zoom bubble from the cursor |
 | `size`         |  NO | `200`            | `Number`             | size of the magnifier window |
+| `style`        |  NO |                  | `Object`             | optional styling |
