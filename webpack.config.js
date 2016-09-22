@@ -1,37 +1,31 @@
 var path = require('path');
-var webpack = require('webpack');
+require('webpack');
 
 module.exports = {
   cache: true,
-  entry: {
-    App: './src/App'
-  },
+  entry: path.join(__dirname, '/src/index.js'),
+  externals: [
+    {
+      "react": {
+        root: "React",
+        commonjs2: "react",
+        commonjs: "react",
+        amd: "react"
+      }
+    }
+  ],
   output: {
-    path: path.join(__dirname, 'example'),
-    publicPath: 'example',
-    filename: '[name].js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'react-image-magnifier.js',
+    library: 'ReactImageMagnifier',
+    libraryTarget: 'umd'
+  },
+  resolve: {
+    extensions: ['', '.js']
   },
   module: {
     loaders: [
-      {
-        test: /\.js?$/,
-        exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          optional: [
-            'runtime',
-            'minification.propertyLiterals'
-          ]
-        }
-      }
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel' }
     ],
-    noParse: /\.min\.js/
   },
-  resolve: {
-    modulesDirectories: ['src/Components', 'src/Views', 'src/Styles', 'node_modules'],
-    extensions: ['', '.js']
-  },
-  plugins: [
-    new webpack.NoErrorsPlugin()
-  ]
 };
