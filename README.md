@@ -14,9 +14,9 @@ import ImageMagnifer from 'react-image-magnifier';
 
 const App = () => (
   <ImageMagnifier
-    src: "img/beach-small.jpg",
-    height: 300
-    width: 400,
+    src="img/beach-small.jpg"
+    height={300}
+    width={400}
     zoomImage={{
       width: 1600,
       height: 1200
