@@ -43,6 +43,7 @@ const Magnifier = React.createClass({
                     props.offsetX < props.smallImage.width &&
                     props.offsetY > 0 &&
                     props.offsetX > 0;
+    console.log(`${props.src} : ${props.offsetY} < ${props.smallImage.height} && ${props.offsetX} < ${props.smallImage.width} && ${props.offsetY} > 0 && ${props.offsetX} > 0 : ${isVisible}`);
     return (
       <div style={{
         position: 'absolute',
