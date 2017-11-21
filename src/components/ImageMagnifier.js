@@ -3,14 +3,11 @@ import ReactDOM from 'react-dom';
 import Magnifier from './Magnifier';
 
 function getOffset(el) {
-  let x = 0;
-  let y = 0;
-  while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-    x += el.offsetLeft - el.scrollLeft;
-    y += el.offsetTop - el.scrollTop;
-    el = el.offsetParent;
+  el = el.getBoundingClientRect();
+  return {
+    x: el.left + window.pageXOffset,
+    y: el.top + window.pageYOffset
   }
-  return { x, y };
 }
 
 const ImageMagnifier = React.createClass({
@@ -70,8 +67,8 @@ const ImageMagnifier = React.createClass({
     this.setState({
       x: e.clientX + window.pageXOffset,
       y: e.clientY + window.pageYOffset,
-      offsetX: e.clientX - offset.x + window.pageXOffset,
-      offsetY: e.clientY - offset.y + window.pageYOffset
+      offsetX: e.clientX - offset.x,
+      offsetY: e.clientY - offset.y
     });
   },
 
