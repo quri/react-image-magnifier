@@ -4,7 +4,7 @@ import Magnifier from "./Magnifier";
 
 export class ImageMagnifier extends React.Component {
   static defaultProps = {
-    size: 200,
+    magnifierSize: 200,
     cursorOffset: {
       left: 0,
       top: 0,
@@ -44,7 +44,7 @@ export class ImageMagnifier extends React.Component {
     this.setState({
       magnify: false,
     });
-  onMouseMove = (e: SyntheticMouseEvent<*>) => {
+  onMouseMove = e => {
     if (this.img) {
       const box = this.img.getBoundingClientRect();
       this.setState({
@@ -72,7 +72,7 @@ export class ImageMagnifier extends React.Component {
       const ratios = this.zoomRatio();
       return (
         <Magnifier
-          size={this.props.size}
+          size={this.props.magnifierSize}
           src={this.props.src}
           x={this.state.x}
           y={this.state.y}
@@ -102,7 +102,7 @@ export class ImageMagnifier extends React.Component {
             width: this.props.width,
             ...this.props.style,
           }}
-        />{" "}
+        />
       </div>
     );
   }
@@ -110,9 +110,9 @@ export class ImageMagnifier extends React.Component {
 
 ImageMagnifier.propTypes = {
   src: PropTypes.string.isRequired, // URL of the image
-  size: PropTypes.number, // size of the magnifier window
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
+  magnifierSize: PropTypes.number, // size of the magnifier window
   cursorOffset: PropTypes.shape({
     left: PropTypes.number.isRequired,
     top: PropTypes.number.isRequired,
