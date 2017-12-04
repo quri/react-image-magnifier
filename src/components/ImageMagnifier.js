@@ -1,116 +1,127 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 import Magnifier from "./Magnifier";
 
-function getOffset(el) {
-  let x = 0;
-  let y = 0;
-  while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-    x += el.offsetLeft - el.scrollLeft;
-    y += el.offsetTop - el.scrollTop;
-    el = el.offsetParent;
-  }
-  return { x, y };
-}
-
-class ImageMagnifier extends React.Component {
-  portalElement: null;
-
-  getDefaultProps() {
-    return {
-      size: 200,
-      cursorOffset: { x: 0, y: 0 },
-      height: "auto",
-      width: "100%",
-    };
-  }
-
-  getInitialState() {
-    return {
-      x: 0,
-      y: 0,
-      offsetX: -1,
-      offsetY: -1,
-    };
-  }
+export class ImageMagnifier extends React.Component {
+  static defaultProps = {
+    size: 200,
+    cursorOffset: {
+      left: 0,
+      top: 0,
+    },
+    height: "auto",
+    width: "100%",
+    zoomImage: null,
+    style: {},
+  };
+  state = {
+    magnify: false,
+    x: 0,
+    y: 0,
+  };
 
   componentDidMount() {
-    document.addEventListener("mousemove", this.onMouseMove);
-    if (!this.portalElement) {
-      this.portalElement = document.createElement("div");
-      document.body.appendChild(this.portalElement);
+    if (this.container) {
+      this.container.addEventListener("mouseenter", this.onMouseEnter);
+      this.container.addEventListener("mouseleave", this.onMouseLeave);
+      this.container.addEventListener("mousemove", this.onMouseMove);
     }
-    this.componentDidUpdate();
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousemove", this.onMouseMove);
-    document.body.removeChild(this.portalElement);
-    this.portalElement = null;
+    if (this.container) {
+      this.container.removeEventListener("mouseenter", this.onMouseEnter);
+      this.container.removeEventListener("mouseleave", this.onMouseLeave);
+      this.container.removeEventListener("mousemove", this.onMouseMove);
+    }
   }
 
-  onMouseMove = e => {
-    const offset = getOffset(this.img);
+  onMouseEnter = () =>
     this.setState({
-      x: e.x + window.scrollX,
-      y: e.y + window.scrollY,
-      offsetX: e.x - offset.x,
-      offsetY: e.y - offset.y,
+      magnify: true,
     });
+  onMouseLeave = () =>
+    this.setState({
+      magnify: false,
+    });
+  onMouseMove = (e: SyntheticMouseEvent<*>) => {
+    if (this.img) {
+      const box = this.img.getBoundingClientRect();
+      this.setState({
+        x: e.clientX - box.left + this.props.cursorOffset.left,
+        y: e.clientY - box.top + this.props.cursorOffset.top,
+      });
+    }
   };
 
-  componentDidUpdate() {
-    ReactDOM.render(
-      <Magnifier
-        cursorOffset={this.props.cursorOffset}
-        offsetX={this.state.offsetX}
-        offsetY={this.state.offsetY}
-        size={this.props.size}
-        smallImage={{
-          height: this.img.clientHeight,
-          width: this.img.clientWidth,
-        }}
-        src={this.props.src}
-        x={this.state.x}
-        y={this.state.y}
-        zoomImage={this.props.zoomImage}
-      />,
-      this.portalElement,
-    );
-  }
+  zoomRatio = () => {
+    const image = new Image();
+    image.src = this.props.src;
+    return {
+      x:
+        ((this.props.zoomImage && this.props.zoomImage.width) || image.width) /
+        this.img.clientWidth,
+      y:
+        ((this.props.zoomImage && this.props.zoomImage.height) ||
+          image.height) / this.img.clientHeight,
+    };
+  };
+
+  renderMagnifier = () => {
+    if (this.img) {
+      const ratios = this.zoomRatio();
+      return (
+        <Magnifier
+          size={this.props.size}
+          src={this.props.src}
+          x={this.state.x}
+          y={this.state.y}
+          zoomRatio={ratios}
+        />
+      );
+    }
+    return null;
+  };
 
   render() {
     return (
-      <img
-        ref={node => (this.img = node)}
-        src={this.props.src}
-        style={Object.assign(
-          {
+      <div
+        id="ImageMagnifier"
+        ref={node => (this.container = node)}
+        style={{
+          cursor: "none",
+          position: "relative",
+        }}
+      >
+        {this.state.magnify && this.renderMagnifier()}{" "}
+        <img
+          ref={img => (this.img = img)}
+          src={this.props.src}
+          style={{
             height: this.props.height,
             width: this.props.width,
-          },
-          this.props.style,
-        )}
-      />
+            ...this.props.style,
+          }}
+        />{" "}
+      </div>
     );
   }
 }
 
 ImageMagnifier.propTypes = {
-  size: PropTypes.number, // size of the magnifier window
-  cursorOffset: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }), // offset of the zoom bubble from the cursor
   src: PropTypes.string.isRequired, // URL of the image
+  size: PropTypes.number, // size of the magnifier window
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
+  cursorOffset: PropTypes.shape({
+    left: PropTypes.number.isRequired,
+    top: PropTypes.number.isRequired,
+  }), // offset of the zoom bubble from the cursor
   zoomImage: PropTypes.shape({
     height: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
   }), // size of the zoomed-in image
-  style: PropTypes.object,
+  style: PropTypes.shape({}),
 };
 
 export default ImageMagnifier;
