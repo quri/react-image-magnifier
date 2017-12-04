@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import Magnifier from "./Magnifier";
 
-function getZoomRatio(zoomImage, img) {
+function getZoomRatio(src, zoomImage, img) {
   const image = new Image();
-  image.src = this.props.src;
+  image.src = src;
   return {
     x: ((zoomImage && zoomImage.width) || image.width) / img.clientWidth,
     y: ((zoomImage && zoomImage.height) || image.height) / img.clientHeight,
@@ -84,7 +84,11 @@ export class ImageMagnifier extends React.Component {
 
   renderMagnifier = () => {
     if (this.img) {
-      const ratios = getZoomRatio(this.props.zoomImage, this.img);
+      const ratios = getZoomRatio(
+        this.props.src,
+        this.props.zoomImage,
+        this.img,
+      );
       return (
         <Magnifier
           size={this.props.magnifierSize}
