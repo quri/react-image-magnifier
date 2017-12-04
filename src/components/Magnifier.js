@@ -28,7 +28,7 @@ export const Magnifier = props => {
         backgroundPosition: `${bgX}px ${bgY}px`,
       }}
     />,
-    document.getElementById("ImageMagnifier"),
+    document.getElementById("React-Image-Magnifier__ImageMagnifier--Container"),
   );
 };
 

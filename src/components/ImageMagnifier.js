@@ -2,7 +2,31 @@ import React from "react";
 import PropTypes from "prop-types";
 import Magnifier from "./Magnifier";
 
+function getZoomRatio(zoomImage, img) {
+  const image = new Image();
+  image.src = this.props.src;
+  return {
+    x: ((zoomImage && zoomImage.width) || image.width) / img.clientWidth,
+    y: ((zoomImage && zoomImage.height) || image.height) / img.clientHeight,
+  };
+}
 export class ImageMagnifier extends React.Component {
+  static propTypes = {
+    src: PropTypes.string.isRequired, // URL of the image
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
+    magnifierSize: PropTypes.number, // size of the magnifier window
+    cursorOffset: PropTypes.shape({
+      left: PropTypes.number.isRequired,
+      top: PropTypes.number.isRequired,
+    }), // offset of the zoom bubble from the cursor
+    zoomImage: PropTypes.shape({
+      height: PropTypes.number.isRequired,
+      width: PropTypes.number.isRequired,
+    }), // size of the zoomed-in image
+    style: PropTypes.shape({}),
+  };
+
   static defaultProps = {
     magnifierSize: 200,
     cursorOffset: {
@@ -14,11 +38,15 @@ export class ImageMagnifier extends React.Component {
     zoomImage: null,
     style: {},
   };
-  state = {
-    magnify: false,
-    x: 0,
-    y: 0,
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      magnify: false,
+      x: 0,
+      y: 0,
+    };
+  }
 
   componentDidMount() {
     if (this.container) {
@@ -54,22 +82,9 @@ export class ImageMagnifier extends React.Component {
     }
   };
 
-  zoomRatio = () => {
-    const image = new Image();
-    image.src = this.props.src;
-    return {
-      x:
-        ((this.props.zoomImage && this.props.zoomImage.width) || image.width) /
-        this.img.clientWidth,
-      y:
-        ((this.props.zoomImage && this.props.zoomImage.height) ||
-          image.height) / this.img.clientHeight,
-    };
-  };
-
   renderMagnifier = () => {
     if (this.img) {
-      const ratios = this.zoomRatio();
+      const ratios = getZoomRatio(this.props.zoomImage, this.img);
       return (
         <Magnifier
           size={this.props.magnifierSize}
@@ -86,14 +101,14 @@ export class ImageMagnifier extends React.Component {
   render() {
     return (
       <div
-        id="ImageMagnifier"
+        id="React-Image-Magnifier__ImageMagnifier--Container"
         ref={node => (this.container = node)}
         style={{
           cursor: "none",
           position: "relative",
         }}
       >
-        {this.state.magnify && this.renderMagnifier()}{" "}
+        {this.state.magnify && this.renderMagnifier()}
         <img
           ref={img => (this.img = img)}
           src={this.props.src}
@@ -107,21 +122,5 @@ export class ImageMagnifier extends React.Component {
     );
   }
 }
-
-ImageMagnifier.propTypes = {
-  src: PropTypes.string.isRequired, // URL of the image
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // size of the non-zoomed-in image
-  magnifierSize: PropTypes.number, // size of the magnifier window
-  cursorOffset: PropTypes.shape({
-    left: PropTypes.number.isRequired,
-    top: PropTypes.number.isRequired,
-  }), // offset of the zoom bubble from the cursor
-  zoomImage: PropTypes.shape({
-    height: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-  }), // size of the zoomed-in image
-  style: PropTypes.shape({}),
-};
 
 export default ImageMagnifier;
