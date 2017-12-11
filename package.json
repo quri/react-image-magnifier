@@ -1,6 +1,6 @@
 {
   "name": "react-image-magnifier",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description":
     "A react component that accepts a high-res source image and produces a magnifier window on mouse hover over the part of the image the cursor is over",
   "main": "lib/index.js",

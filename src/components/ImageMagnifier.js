@@ -109,7 +109,6 @@ export class ImageMagnifier extends React.Component {
         ref={node => (this.container = node)}
         style={{
           cursor: "none",
-          position: "relative",
         }}
       >
         {this.state.magnify && this.renderMagnifier()}
