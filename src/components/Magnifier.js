@@ -37,10 +37,10 @@ Magnifier.propTypes = {
   src: PropTypes.string.isRequired, // URL of the image
   x: PropTypes.number.isRequired, // x position
   y: PropTypes.number.isRequired, // y position
-  zoomRatio: {
+  zoomRatio: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-  }, // zoom ratio
+  }), // zoom ratio
 };
 
 export default Magnifier;
