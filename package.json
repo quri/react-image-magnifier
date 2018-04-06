@@ -1,7 +1,8 @@
 {
   "name": "react-image-magnifier",
-  "version": "3.0.0",
-  "description": "A react component that accepts a high-res source image and produces a magnifier window on mouse hover over the part of the image the cursor is over",
+  "version": "4.0.2",
+  "description":
+    "A react component that accepts a high-res source image and produces a magnifier window on mouse hover over the part of the image the cursor is over",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint src",
@@ -11,13 +12,7 @@
     "type": "git",
     "url": "https://github.com/lelandrichardson/react-image-magnifier.git"
   },
-  "keywords": [
-    "react",
-    "react-component",
-    "image",
-    "magnifier"
-  ],
-  "author": "Leland Richardson",
+  "keywords": ["react", "react-component", "image", "magnifier"],
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -33,9 +28,11 @@
     "eslint-plugin-react": "^6.3.0",
     "node-libs-browser": "^0.5.2",
     "prop-types": "^15.6.0",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
     "rimraf": "^2.5.4",
     "webpack": "^1.9.10"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   }
 }
